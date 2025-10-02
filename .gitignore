@@ -1,0 +1,16 @@
+# Node.js
+node_modules
+dist
+.env
+*.log
+
+# TypeScript
+*.tsbuildinfo
+
+# IDEs
+.vscode
+.idea
+
+# Sistema
+.DS_Store
+Thumbs.db
