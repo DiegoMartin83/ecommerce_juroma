@@ -50,6 +50,7 @@ import dotenv from "dotenv";
  import authRoutes from "./routes/auth.routes.ts";
 import productRoutes from "./routes/product.routes.ts";
 import usersRoutes from "./routes/users.routes.ts";
+ import cartRoutes from "./routes/cart.routes.js";
 import "reflect-metadata";
 import { AppDataSource } from "./config/data-source.ts";
 
@@ -67,9 +68,10 @@ app.use(cors());
 app.use(express.json());
 
 // Rutas
-app.use("/api/products", productRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
- app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+ app.use("/api/cart", cartRoutes);
 
 const PORT = process.env.PORT || 4000;
 

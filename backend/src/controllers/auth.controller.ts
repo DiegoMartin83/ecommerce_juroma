@@ -65,15 +65,70 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 };
 
-// ============================
-// 📌 LISTAR USUARIOS
-// ============================
-export const getUsers = async (_req: Request, res: Response) => {
+// // ============================
+// // 📌 LISTAR USUARIOS
+// // ============================
+// export const getUsers = async (_req: Request, res: Response) => {
+//   try {
+//     const users = await userRepository.find();
+//     res.json(users);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Error al obtener usuarios" });
+//   }
+// };
+
+// ================
+// 📌 VER PERFIL
+// ================
+
+export const getProfile = async (req: Request, res: Response) => {
   try {
-    const users = await userRepository.find();
-    res.json(users);
+    const profile = await userRepository.findOne({ where: {id: parseInt(req.params.id)},  select: ['id', 'name', 'email'] });
+    if (!profile) return res.status(404).json({ message: "Error" });
+    res.json(profile);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error al obtener usuarios" });
+    res.status(500).json({ message: "Error al obtener el perfil", error });
+  }
+};
+
+
+//===============================
+//  Actualizar perfil de usuario
+//===============================
+export const updateProfile = async (req: Request, res: Response) => {
+  const userId = parseInt(req.params.id);
+  const { name, email, password } = req.body;
+
+  try {
+    // Traer el usuario con la contraseña incluida
+    const user = await userRepository.findOne({
+    
+      where: { id: userId },
+      select: ['id', 'name', 'email', 'password'],
+      
+    });
+      console.log(user)
+    if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
+
+    // Verificar contraseña actual
+    console.log("Password en DB:", user.password); // debería ser el hash
+console.log("Password ingresada:", password); // debería ser la real (no hasheada)
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Contraseña actual incorrecta' });
+    }
+
+    // Actualizar campos permitidos
+    if (name) user.name = name;
+    if (email) user.email = email;
+
+    await userRepository.save(user);
+
+    res.json({ message: 'Perfil actualizado correctamente' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al actualizar el perfil', error });
+    console.log(req.body);
   }
 };

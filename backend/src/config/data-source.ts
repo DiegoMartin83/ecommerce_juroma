@@ -19,16 +19,19 @@
 //   subscribers: [],
 // });
 
+
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import dotenv from "dotenv";
 
 // 👇 carga variables desde .env
 dotenv.config();
-
+import { Order } from "../entities/Order.js";
 import { User } from "../entities/User.ts";
 import { Product } from "../entities/Product.ts";
 import { Auth } from "../entities/Auth.ts";
+ import { Cart } from "../entities/Cart.ts";
+ import { CartItem } from "../entities/CartItem.ts";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -39,7 +42,8 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true, // ⚠️ crea tablas automáticamente en dev
   logging: false,
-  entities: [User, Product, Auth],
+  // entities: [User, Product,Order, Order, Auth, Cart, CartItem],
+    entities: [User, Product,Order, Order, Auth, Cart, CartItem],
   migrations: [],
   subscribers: [],
 });

@@ -20,7 +20,12 @@
 
 // export default router;
 import { Router } from "express";
-import { registerUser, loginUser } from "../controllers/auth.controller.ts";
+import { 
+  registerUser, 
+  loginUser, 
+  getProfile, 
+  updateProfile 
+} from "../controllers/auth.controller.ts";
 import { authMiddleware } from "../middlewares/auth.ts";
 
 const router = Router();
@@ -30,6 +35,11 @@ router.post("/register", registerUser);
 
 // Login de usuario
 router.post("/login", loginUser);
+
+//Perfiles
+ router.get("/:id", getProfile);
+ router.put("/:id", updateProfile);
+ 
 
 // ruta protegida de ejemplo
 router.get("/profile", authMiddleware, (req, res) => {

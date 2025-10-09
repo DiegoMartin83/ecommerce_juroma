@@ -65,8 +65,8 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../config/data-source.ts";
 import { User } from "../entities/User.ts";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+// import bcrypt from "bcrypt";
+// import jwt from "jsonwebtoken";
 
 const userRepository = AppDataSource.getRepository(User);
 
@@ -140,4 +140,38 @@ export const getUsers = async (_req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({ message: "Error al obtener usuarios" });
   }
+  
+};
+
+export const getUserById = async (req: Request, res: Response) => {
+  try {
+    const user = await userRepository.findOne({ where: {id: parseInt(req.params.id)},  select: ['id', 'name', 'email'] });
+    if (!user) return res.status(404).json({ message: "Error" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener datos del usuario", error });
+  }
+};
+
+export const getUserByEmail = async (req: Request, res: Response) => {
+  try {
+
+
+    const user = await userRepository.findOne({ where: {email: req.params.email},  select: ['id', 'name', 'email'] });
+    if (!user) return res.status(404).json({ message: "Email inexistente" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener datos del usuario", error });
+  }
+};
+
+export const getUsersWithOrders = async (_req: Request, res: Response) => {
+  try {
+    const users = await userRepository.find();
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al obtener usuarios con órdenes" });
+  }
+  
 };
