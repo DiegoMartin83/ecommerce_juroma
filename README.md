@@ -5,7 +5,7 @@ Este proyecto está estructurado para ser escalable y mantener separadas las res
 
 ---
 
-## 🚀 Tecnologías utilizadas
+##  Tecnologías utilizadas
 
 - **Node.js** (entorno de ejecución)
 - **TypeScript**
@@ -18,7 +18,7 @@ Este proyecto está estructurado para ser escalable y mantener separadas las res
 
 ---
 
-## 📂 Estructura del proyecto
+##  Estructura del proyecto
 
 ecommerce-backend/
 │── src/
@@ -48,7 +48,7 @@ Copiar código
 
 ---
 
-## ✅ Funcionalidades implementadas
+##  Funcionalidades implementadas
 
 - **Usuarios**
   - Registro de usuario
@@ -66,7 +66,7 @@ Copiar código
 
 ---
 
-## 📌 Próximas tareas (TO-DO)
+##  (TO-DO)
 
 - **Gestión de productos**
   - [ ] Crear producto
@@ -95,7 +95,7 @@ Copiar código
 
 ---
 
-## ⚙️ Variables de entorno
+##  Variables de entorno
 
 Se debe crear un archivo `.env` en la raíz del proyecto con la siguiente configuración:
 
