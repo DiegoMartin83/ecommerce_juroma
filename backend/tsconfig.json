@@ -1,68 +1,31 @@
-// {
-//   "compilerOptions": {
-//     "module": "commonJS",       // Para usar ESModules
-//     "target": "ES2020",       // Compilar para la última versión de JavaScript
-//     "moduleResolution": "node",
-//     "outDir": "./dist",
-//     "rootDir": "./src",
-//     "esModuleInterop": true,  // Permite la importación de módulos CommonJS
-//     "strict": true,
-//     "sourceMap": true,
-//     "declaration": true,
-//     "declarationMap": true,
-//     "skipLibCheck": true,
-//      "experimentalDecorators": true,
-//     "emitDecoratorMetadata": true,
-//   },
-//   "include": [
-//     "src/**/*.ts"
-//   ],
-//   "exclude": [
-//     "node_modules"
-//   ]
-  
-
-  
-// }
-
-// {
-//   "compilerOptions": {
-//     "module": "commonjs", 
-//     "target": "ES2020", 
-//     "moduleResolution": "node",
-//     "outDir": "./dist",
-//     "rootDir": "./src",
-//     "esModuleInterop": true,
-//     "strict": true,
-//     "sourceMap": true,
-//     "declaration": true,
-//     "declarationMap": true,
-//     "skipLibCheck": true,
-//     "experimentalDecorators": true,
-//     "emitDecoratorMetadata": true
-//   },
-//   "include": ["src/**/*.ts"],
-//   "exclude": ["node_modules"]
-// }
 
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ES2020",
-    "moduleResolution": "node",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "esModuleInterop": true,
-    "strict": true,
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "skipLibCheck": true,
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "allowImportingTsExtensions": true
-
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }
+
+  
+   
+
+
+   
+
+
+  
+ 
+   
+    
+  
+

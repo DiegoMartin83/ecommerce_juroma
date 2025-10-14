@@ -27,11 +27,11 @@ import dotenv from "dotenv";
 // 👇 carga variables desde .env
 dotenv.config();
 import { Order } from "../entities/Order.js";
-import { User } from "../entities/User.ts";
-import { Product } from "../entities/Product.ts";
-import { Auth } from "../entities/Auth.ts";
- import { Cart } from "../entities/Cart.ts";
- import { CartItem } from "../entities/CartItem.ts";
+import { User } from "../entities/User.js";
+import { Product } from "../entities/Product.js";
+import { Auth } from "../entities/Auth.js";
+ import { Cart } from "../entities/Cart.js";
+ import { CartItem } from "../entities/CartItem.js";
 
 export const AppDataSource = new DataSource({
   type: "mysql",

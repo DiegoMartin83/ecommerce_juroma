@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { AppDataSource } from "../config/data-source.ts";
-import { User } from "../entities/User.ts";
+import { AppDataSource } from "../config/data-source.js";
+import { User } from "../entities/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -11,7 +11,7 @@ const userRepository = AppDataSource.getRepository(User);
 // ============================
 export const registerUser = async (req: Request, res: Response) => {
   try {
-    const { name, email, password } = req.body;
+    const { user_name, email, password } = req.body;
 
     const existingUser = await userRepository.findOne({ where: { email } });
     if (existingUser) {
@@ -21,7 +21,7 @@ export const registerUser = async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = userRepository.create({
-      name,
+      user_name,
       email,
       password: hashedPassword,
     });
@@ -84,7 +84,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
 export const getProfile = async (req: Request, res: Response) => {
   try {
-    const profile = await userRepository.findOne({ where: {id: parseInt(req.params.id)},  select: ['id', 'name', 'email'] });
+    const profile = await userRepository.findOne({ where: {id: parseInt(req.params.id)},  select: ['id', 'user_name', 'email'] });
     if (!profile) return res.status(404).json({ message: "Error" });
     res.json(profile);
   } catch (error) {
@@ -105,7 +105,7 @@ export const updateProfile = async (req: Request, res: Response) => {
     const user = await userRepository.findOne({
     
       where: { id: userId },
-      select: ['id', 'name', 'email', 'password'],
+      select: ['id', 'user_name', 'email', 'password'],
       
     });
       console.log(user)
@@ -121,7 +121,7 @@ console.log("Password ingresada:", password); // debería ser la real (no hashea
     }
 
     // Actualizar campos permitidos
-    if (name) user.name = name;
+    if (name) user.user_name = name;
     if (email) user.email = email;
 
     await userRepository.save(user);

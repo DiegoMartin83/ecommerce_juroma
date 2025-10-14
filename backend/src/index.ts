@@ -43,16 +43,20 @@
 // //   // console.log("");
 // //   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 // // });
+import "reflect-metadata";
 
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
- import authRoutes from "./routes/auth.routes.ts";
-import productRoutes from "./routes/product.routes.ts";
-import usersRoutes from "./routes/users.routes.ts";
+ import authRoutes from "./routes/auth.routes.js";
+import productRoutes from "./routes/product.routes.js";
+import usersRoutes from "./routes/users.routes.js";
  import cartRoutes from "./routes/cart.routes.js";
 import "reflect-metadata";
-import { AppDataSource } from "./config/data-source.ts";
+import { AppDataSource } from "./config/data-source.js";
+import { seedProducts } from "../src/seeds/seed-products.js";
+import { seedUsers } from "../src/seeds/seed-users.js";
+import { seedCarts } from "./seeds/seed-carts.js";
 
 dotenv.config();
 // 👇 acá probamos si se están leyendo las variables

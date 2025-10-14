@@ -63,8 +63,8 @@
 
 
 import { Request, Response } from "express";
-import { AppDataSource } from "../config/data-source.ts";
-import { User } from "../entities/User.ts";
+import { AppDataSource } from "../config/data-source.js";
+import { User } from "../entities/User.js";
 // import bcrypt from "bcrypt";
 // import jwt from "jsonwebtoken";
 
@@ -145,7 +145,7 @@ export const getUsers = async (_req: Request, res: Response) => {
 
 export const getUserById = async (req: Request, res: Response) => {
   try {
-    const user = await userRepository.findOne({ where: {id: parseInt(req.params.id)},  select: ['id', 'name', 'email'] });
+    const user = await userRepository.findOne({ where: {id: parseInt(req.params.id)},  select: ['id', 'user_name', 'email'] });
     if (!user) return res.status(404).json({ message: "Error" });
     res.json(user);
   } catch (error) {
@@ -157,7 +157,7 @@ export const getUserByEmail = async (req: Request, res: Response) => {
   try {
 
 
-    const user = await userRepository.findOne({ where: {email: req.params.email},  select: ['id', 'name', 'email'] });
+    const user = await userRepository.findOne({ where: {email: req.params.email},  select: ['id', 'user_name', 'email'] });
     if (!user) return res.status(404).json({ message: "Email inexistente" });
     res.json(user);
   } catch (error) {

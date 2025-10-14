@@ -3,7 +3,7 @@ import {
  getUsers,
  getUserById,
  getUserByEmail
-} from "../controllers/users.controller.ts";
+} from "../controllers/users.controller.js";
 
 
 
@@ -12,6 +12,7 @@ const router = Router();
 router.get("/", getUsers);
 router.get ("/:id", getUserById);
 router.get("/email/:email", getUserByEmail);
+
 // router.put("/:id", updateProfile)
 
 

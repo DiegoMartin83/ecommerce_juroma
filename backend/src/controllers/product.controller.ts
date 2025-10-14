@@ -26,8 +26,8 @@
 //   }
 // };
 
-import { AppDataSource } from "../config/data-source.ts";
-import { Product } from "../entities/Product.ts";
+import { AppDataSource } from "../config/data-source.js";
+import { Product } from "../entities/Product.js";
 import { Request, Response } from "express";
 
 const productRepository = AppDataSource.getRepository(Product);
