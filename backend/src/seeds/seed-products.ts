@@ -14,7 +14,7 @@ export const seedProducts = async () => {
     productRepo.create({
       product_name: "Zapatilla Full Negra",
       description: "Zapatilla urbana color negro",
-      price: 50.0,
+      price: 50000.0,
       stock: 500,
       imageUrl: undefined, // ✅ cambiamos null por undefined
     }),

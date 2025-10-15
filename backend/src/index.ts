@@ -52,7 +52,6 @@ import dotenv from "dotenv";
 import productRoutes from "./routes/product.routes.js";
 import usersRoutes from "./routes/users.routes.js";
  import cartRoutes from "./routes/cart.routes.js";
-import "reflect-metadata";
 import { AppDataSource } from "./config/data-source.js";
 import { seedProducts } from "../src/seeds/seed-products.js";
 import { seedUsers } from "../src/seeds/seed-users.js";

@@ -1,9 +1,12 @@
-// routes/orderRoutes.ts
-import express from "express";
-import { getOrdersByUser } from "../controllers/orders.controller.js";
+// src/routes/order.routes.ts
 
-const router = express.Router();
+import { Router } from "express";
+import { createOrderFromCart } from "../controllers/orders.controller.js";
 
-router.get("/user/:id", getOrdersByUser);
+const router = Router();
+
+// 🛒 Crear una orden a partir del carrito del usuario
+router.post("/:userId/checkout", createOrderFromCart);
 
 export default router;
+

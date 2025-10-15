@@ -26,12 +26,13 @@ import dotenv from "dotenv";
 
 // 👇 carga variables desde .env
 dotenv.config();
-import { Order } from "../entities/Order.js";
 import { User } from "../entities/User.js";
 import { Product } from "../entities/Product.js";
 import { Auth } from "../entities/Auth.js";
  import { Cart } from "../entities/Cart.js";
  import { CartItem } from "../entities/CartItem.js";
+ import { Order } from "../entities/Order.js";
+import { OrderItem } from "../entities/OrderItem.js";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -43,7 +44,7 @@ export const AppDataSource = new DataSource({
   synchronize: true, // ⚠️ crea tablas automáticamente en dev
   logging: false,
   // entities: [User, Product,Order, Order, Auth, Cart, CartItem],
-    entities: [User, Product,Order, Order, Auth, Cart, CartItem],
+    entities: [User, Product,Order, Order, Auth, Cart, CartItem, Order, OrderItem],
   migrations: [],
   subscribers: [],
 });
