@@ -18,7 +18,7 @@ export enum OrderStatus {
   CANCELED = "CANCELED",
 }
 
-@Entity()
+@Entity("orders")
 export class Order {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -26,14 +26,11 @@ export class Order {
   @ManyToOne(() => User, (user) => user.orders, { eager: true })
   user!: User;
 
-  @OneToMany(() => OrderItem, (orderItem) => orderItem.order, {
-    cascade: true,
-    eager: true,
-  })
+  @OneToMany(() => OrderItem, (item) => item.order, { cascade: true })
   items!: OrderItem[];
 
   @Column("decimal", { precision: 10, scale: 2 })
-  total!: number;
+  totalAmount!: number;
 
   @Column({
     type: "enum",

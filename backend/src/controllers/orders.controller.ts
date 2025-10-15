@@ -1,78 +1,62 @@
-// src/controllers/order.controller.ts
-
 import { Request, Response } from "express";
-import { AppDataSource } from "../config/data-source.js";
-import { Cart } from "../entities/Cart.js";
-import { Order } from "../entities/Order.js";
-import { OrderItem } from "../entities/OrderItem.js";
-import { OrderStatus } from "../entities/Order.js";
-import { CartItem } from "../entities/CartItem.js";
+import {
+  createOrderFromCart,
+  getOrdersByUser,
+  getOrderById,
+} from "../services/orders.service.js";
 
-export const createOrderFromCart = async (req: Request, res: Response) => {
+/**
+ * Crea una nueva orden desde el carrito del usuario
+ */
+export const createOrder = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const { userId } = req.body; // o req.params según la ruta
 
-    const cartRepository = AppDataSource.getRepository(Cart);
-    const orderRepository = AppDataSource.getRepository(Order);
-    const orderItemRepository = AppDataSource.getRepository(OrderItem);
-    const cartItemRepository = AppDataSource.getRepository(CartItem);
-
-    // ✅ Buscamos el carrito con sus ítems y productos
-    const cart = await cartRepository.findOne({
-      where: { user: { id: parseInt(userId, 10) } },
-      relations: ["items", "items.product", "user"],
-    });
-
-    if (!cart || cart.items.length === 0) {
-      return res.status(400).json({ message: "El carrito está vacío o no existe" });
+    if (!userId) {
+      return res.status(400).json({ message: "Falta el userId" });
     }
 
-    // ✅ Calculamos total
-    const total = cart.items.reduce(
-      (acc, item) => acc + item.quantity * Number(item.priceAtAdd),
-      0
-    );
-
-    // ✅ Creamos la orden
-    const order = orderRepository.create({
-      user: cart.user,
-      total,
-      status: OrderStatus.PENDING,
-    });
-
-    await orderRepository.save(order);
-
-    // ✅ Creamos los ítems de la orden
-    const orderItems = cart.items.map((item) =>
-      orderItemRepository.create({
-        order,
-        product: item.product,
-        quantity: item.quantity,
-        priceAtPurchase: item.priceAtAdd,
-      })
-    );
-
-    await orderItemRepository.save(orderItems);
-
-    // ✅ Vaciamos el carrito
-    await cartItemRepository.remove(cart.items);
-
+    const order = await createOrderFromCart(userId);
     return res.status(201).json({
       message: "Orden creada exitosamente",
-      order: {
-        id: order.id,
-        total,
-        status: order.status,
-        user: { id: cart.user.id, name: cart.user.user_name, email: cart.user.email },
-        items: orderItems.map((i) => ({
-          product: i.product.product_name,
-          quantity: i.quantity,
-          price: i.priceAtPurchase,
-        })),
-      },
+      order,
     });
+  } catch (error: any) {
+    console.error("Error creando la orden:", error);
+    return res.status(500).json({ message: error.message || "Error interno" });
+  }
+};
+
+/**
+ * Lista todas las órdenes del usuario
+ */
+export const getUserOrders = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const orders = await getOrdersByUser(parseInt(userId, 10));
+
+    return res.status(200).json(orders);
   } catch (error) {
-    console.error("Error creando orden:", error);
+    console.error("Error obteniendo órdenes:", error);
+    return res.status(500).json({ message: "Error interno del servidor" });
+  }
+};
+
+/**
+ * Obtiene una orden específica por ID
+ */
+export const getOrder = async (req: Request, res: Response) => {
+  try {
+    const { orderId } = req.params;
+    const order = await getOrderById(parseInt(orderId, 10));
+
+    if (!order) {
+      return res.status(404).json({ message: "Orden no encontrada" });
+    }
+
+    return res.status(200).json(order);
+  } catch (error) {
+    console.error("Error obteniendo orden:", error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };

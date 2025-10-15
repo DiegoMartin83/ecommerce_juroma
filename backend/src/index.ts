@@ -53,6 +53,7 @@ import productRoutes from "./routes/product.routes.js";
 import usersRoutes from "./routes/users.routes.js";
  import cartRoutes from "./routes/cart.routes.js";
 import { AppDataSource } from "./config/data-source.js";
+import orderRoutes from "./routes/orders.routes.js";
 import { seedProducts } from "../src/seeds/seed-products.js";
 import { seedUsers } from "../src/seeds/seed-users.js";
 import { seedCarts } from "./seeds/seed-carts.js";
@@ -75,6 +76,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/products", productRoutes);
  app.use("/api/cart", cartRoutes);
+ app.use("/api/orders", orderRoutes);
 
 const PORT = process.env.PORT || 4000;
 
