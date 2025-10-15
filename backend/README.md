@@ -5,7 +5,7 @@ Este proyecto está estructurado para ser escalable y mantener separadas las res
 
 ---
 
-## 🚀 Tecnologías utilizadas
+##  Tecnologías utilizadas
 
 - **Node.js** (entorno de ejecución)
 - **TypeScript**
