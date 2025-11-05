@@ -3,6 +3,7 @@ import {
   createOrder,
   getUserOrders,
   getOrder,
+  updateOrderStatus
 } from "../controllers/orders.controller.js";
 
 const router = Router();
@@ -25,5 +26,8 @@ router.get("/user/:userId", getUserOrders);
  * GET /api/orders/:orderId
  */
 router.get("/:orderId", getOrder);
+
+router.put("/:orderId/update", updateOrderStatus);
+
 
 export default router;

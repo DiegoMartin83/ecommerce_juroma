@@ -5,10 +5,11 @@ import {
   ManyToOne,
   OneToMany,
   CreateDateColumn,
-  UpdateDateColumn,
+  UpdateDateColumn
 } from "typeorm";
 import { User } from "./User.js";
-import { OrderItem } from "./OrderItem.js";
+import { OrderItem } from "./OrderItem.js"; 
+import { Payment } from "./Payment.js";
 
 export enum OrderStatus {
   PENDING = "PENDING",
@@ -44,4 +45,13 @@ export class Order {
 
   @UpdateDateColumn()
   updatedAt!: Date;
+
+@OneToMany(() => Payment, (payment) => payment.order)
+payments!: Payment[];
+
 }
+
+
+
+
+

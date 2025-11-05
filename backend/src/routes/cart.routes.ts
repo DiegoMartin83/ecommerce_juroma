@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addToCart, getCartByUser, clearCart, getCartWithItems,getCartItemsClean } from "../controllers/cart.controller.js";
+import { addToCart, getCartByUser, clearCart, getCartWithItems,getCartItemsClean, updateCartItem } from "../controllers/cart.controller.js";
 
 /**
  * Rutas del carrito
@@ -22,5 +22,8 @@ router.delete("/:id", clearCart);
 
 router.get("/:userId/items", getCartWithItems);
 router.get("/:userId/items/clean", getCartItemsClean);
+
+router.put("/:userId/update", updateCartItem);
+
 
 export default router;

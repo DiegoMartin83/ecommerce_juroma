@@ -136,7 +136,7 @@ export class CartItem {
   quantity!: number;
 
   // 🔹 nuevo campo — guarda el precio del producto al momento de agregarlo
-  @Column({ type: "decimal", precision: 10, scale: 2 })
+  @Column({ type: "decimal", precision: 10, scale: 2,  nullable: true })
   priceAtAdd!: number;
 
   @CreateDateColumn()

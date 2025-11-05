@@ -57,6 +57,8 @@ import orderRoutes from "./routes/orders.routes.js";
 import { seedProducts } from "../src/seeds/seed-products.js";
 import { seedUsers } from "../src/seeds/seed-users.js";
 import { seedCarts } from "./seeds/seed-carts.js";
+import paymentRoutes from "./routes/payments.routes.js";
+import mercadopagoRoutes from './routes/mercadopago.routes.js';
 
 dotenv.config();
 // 👇 acá probamos si se están leyendo las variables
@@ -77,6 +79,8 @@ app.use("/api/users", usersRoutes);
 app.use("/api/products", productRoutes);
  app.use("/api/cart", cartRoutes);
  app.use("/api/orders", orderRoutes);
+ app.use("/api/payments", paymentRoutes);
+ app.use('/api/mercadopago', mercadopagoRoutes);
 
 const PORT = process.env.PORT || 4000;
 

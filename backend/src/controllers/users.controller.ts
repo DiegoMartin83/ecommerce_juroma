@@ -134,7 +134,8 @@ const userRepository = AppDataSource.getRepository(User);
 // ============================
 export const getUsers = async (_req: Request, res: Response) => {
   try {
-    const users = await userRepository.find();
+    // const users = await userRepository.find();
+     const users = await userRepository.find({  select: ['id', 'user_name', 'email'] });
     res.json(users);
   } catch (error) {
     console.error(error);

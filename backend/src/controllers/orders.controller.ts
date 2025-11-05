@@ -1,9 +1,13 @@
 import { Request, Response } from "express";
+import { AppDataSource } from "../config/data-source.js";
+import { OrderStatus, Order } from '../entities/Order.js';
 import {
   createOrderFromCart,
   getOrdersByUser,
   getOrderById,
 } from "../services/orders.service.js";
+
+
 
 /**
  * Crea una nueva orden desde el carrito del usuario
@@ -58,5 +62,36 @@ export const getOrder = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error obteniendo orden:", error);
     return res.status(500).json({ message: "Error interno del servidor" });
+  }
+};
+// controllers/order.controller.ts
+export const updateOrderStatus = async (req: Request, res: Response) => {
+  try {
+    const { orderId } = req.params;
+    const { status } = req.body;
+
+    console.log("🛰️ Petición PUT recibida en /api/orders/:orderId/update");
+    console.log("➡️ Params:", req.params);
+    console.log("➡️ Body:", req.body);
+
+    const validStatuses = ["PENDING", "PAID", "SHIPPED", "COMPLETED", "CANCELED"];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: "Estado inválido" });
+    }
+
+    const orderRepo = AppDataSource.getRepository(Order);
+    const order = await orderRepo.findOneBy({ id: Number(orderId) });
+
+    if (!order) {
+      return res.status(404).json({ message: "Orden no encontrada" });
+    }
+
+    order.status = status as OrderStatus;
+    await orderRepo.save(order);
+
+    res.json({ message: `Estado actualizado a ${status}`, order });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al actualizar el estado de la orden" });
   }
 };

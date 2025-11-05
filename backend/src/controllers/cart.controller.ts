@@ -220,7 +220,7 @@ const productRepository = AppDataSource.getRepository(Product);
 const userRepository = AppDataSource.getRepository(User);
 
 /* ============================================================
-   🛒 CREAR O ACTUALIZAR CARRITO (POST /api/cart)
+   🛒 CREAR  (POST /api/cart)
    ============================================================ */
 export const addToCart = async (req: Request, res: Response) => {
   try {
@@ -276,6 +276,50 @@ export const addToCart = async (req: Request, res: Response) => {
   }
 };
 
+/* ============================================================
+   🛒 ACTUALIZAR CARRITO (POST /api/cart)
+   ============================================================ */
+export const updateCartItem = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const { productId, quantity } = req.body;
+
+    const cartRepo = AppDataSource.getRepository(Cart);
+    const itemRepo = AppDataSource.getRepository(CartItem);
+    const productRepo = AppDataSource.getRepository(Product);
+
+    const cart = await cartRepo.findOne({
+      where: { user: { id: Number(userId) } },
+      relations: ["items", "items.product"],
+    });
+
+    if (!cart) {
+      return res.status(404).json({ message: "Carrito no encontrado" });
+    }
+
+    const product = await productRepo.findOneBy({ id: productId });
+    if (!product) {
+      return res.status(404).json({ message: "Producto no encontrado" });
+    }
+
+    const existingItem = cart.items.find((item) => item.product.id === productId);
+
+    if (existingItem) {
+      // Actualizar cantidad
+      existingItem.quantity = quantity;
+      await itemRepo.save(existingItem);
+      return res.json({ message: "Cantidad actualizada", item: existingItem });
+    } else {
+      // Si no existía ese producto en el carrito, se agrega
+      const newItem = itemRepo.create({ cart, product, quantity });
+      await itemRepo.save(newItem);
+      return res.status(201).json({ message: "Producto agregado al carrito", item: newItem });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al actualizar el carrito" });
+  }
+};
 // /* ============================================================
 //    🔍 OBTENER CARRITO POR USUARIO (GET /api/cart/:userId)
 //    ============================================================ */

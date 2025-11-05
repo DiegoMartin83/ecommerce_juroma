@@ -33,6 +33,7 @@ import { Auth } from "../entities/Auth.js";
  import { CartItem } from "../entities/CartItem.js";
  import { Order } from "../entities/Order.js";
 import { OrderItem } from "../entities/OrderItem.js";
+import { Payment } from "../entities/Payment.js";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -44,7 +45,7 @@ export const AppDataSource = new DataSource({
   synchronize: true, // ⚠️ crea tablas automáticamente en dev
   logging: false,
   // entities: [User, Product,Order, Order, Auth, Cart, CartItem],
-    entities: [User, Product,Order, Order, Auth, Cart, CartItem, Order, OrderItem],
+    entities: [User, Product,Order, Order, Auth, Cart, CartItem, Order, OrderItem, Payment],
   migrations: [],
   subscribers: [],
 });
